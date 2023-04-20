@@ -1,0 +1,20 @@
+# dependencies
+server/node_modules/
+client/node_modules
+
+# environment variables
+.env
+
+# logs
+*.log
+
+# build files
+dist/
+build/
+
+# IDE configuration
+.vscode/
+.idea/
+
+# database files
+# data/

@@ -1,0 +1,42 @@
+{
+  "SPY": {
+    "bid": 422.93,
+    "ask": 423.14,
+    "bidSize": 101,
+    "askSize": 75,
+    "volume": 764700,
+    "quoteDetails": "this is SPY"
+  },
+  "DJI": {
+    "bid": 33929,
+    "ask": 33933,
+    "bidSize": 49,
+    "askSize": 42,
+    "volume": 160200000,
+    "quoteDetails": "this is DJI"
+  },
+  "RUS": {
+    "bid": 2305.79,
+    "ask": 2305.93,
+    "bidSize": 101,
+    "askSize": 75,
+    "volume": 1270700,
+    "quoteDetails": "this is RUS"
+  },
+  "NDX": {
+    "bid": 14106.88,
+    "ask": 14107,
+    "bidSize": 26,
+    "askSize": 31,
+    "volume": 217619900,
+    "quoteDetails": "this is NDX"
+  },
+  "TSLA": {
+    "bid": 719.32,
+    "ask": 719.63,
+    "bidSize": 47,
+    "askSize": 31,
+    "volume": 2720400,
+    "quoteDetails": "this is TSLA"
+  }
+}
