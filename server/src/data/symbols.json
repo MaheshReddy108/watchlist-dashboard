@@ -46,21 +46,21 @@
     "askSize": 55,
     "volume": 8000000,
     "quoteDetails": "Apple Inc. (AAPL) designs, manufactures, and markets smartphones, personal computers, tablets, wearables, and accessories, as well as offers services such as the App Store, iCloud, Apple Music, and Apple TV+."
-    },
-    "GOOGL": {
+  },
+  "GOOGL": {
     "bid": 2412.34,
     "ask": 2414.89,
     "bidSize": 20,
     "askSize": 35,
     "volume": 1200000,
     "quoteDetails": "Alphabet Inc. (GOOGL) is a multinational conglomerate that provides online search, advertising, and streaming services through its Google brand, as well as offers hardware products such as the Pixel smartphone and Google Home smart speaker."
-    },
-    "AMZN": {
+  },
+  "AMZN": {
     "bid": 3280.01,
     "ask": 3282.56,
     "bidSize": 30,
     "askSize": 25,
     "volume": 500000,
     "quoteDetails": "Amazon.com Inc. (AMZN) is an American multinational technology company that focuses on e-commerce, cloud computing, digital streaming, and artificial intelligence."
-    }
   }
+}
