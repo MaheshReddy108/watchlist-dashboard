@@ -4,9 +4,9 @@
 }
 
 .watchlist-header {
-  background-color: #1890ff;
-  margin: 30px auto;
-  color: #fff;
+  /* background-color: #1890ff; */
+  margin: 10px auto;
+  color:"#6a0dad";
   padding: 20px;
   width: 70%;
   text-align: center;
@@ -54,16 +54,25 @@
 }
 
 .watchlist-input-container {
-  margin: 10px auto;
+  margin: 3% auto;
   margin-left: 15%;
   width: 30%;
   display: flex;
   /* justify-content: space-between; */
-  align-items: left;
+  align-items: center;
+}
+
+.watchlist-input-container > div {
+  margin-right: 10px;
+}
+
+.watchlist-input-label {
+  font-weight: bold;
+  width: 100%;
 }
 
 .watchlist-input-container .ant-input {
-  width: 30% !important;
+  width: 50% !important;
   margin-right: 1px;
 }
 

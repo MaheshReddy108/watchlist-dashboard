@@ -1,67 +1,55 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { Collapse } from "antd";
+import "./QuoteDetails.css";
 
-function QuoteDetails(props) {
-  const { symbol, handleRemoveSymbol } = props;
 
+const QuoteDetails = ({ selectedSymbol }) => {
   const [quoteDetails, setQuoteDetails] = useState({});
-  const [isLoading, setIsLoading] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
-    const fetchQuoteDetails = async () => {
-      setIsLoading(true);
-      try {
-        const response = await axios.get(`/api/getquotedetails/${symbol}`);
-        setQuoteDetails(response.data);
-      } catch (error) {
-        setErrorMessage("Error fetching quote details.");
-      }
-      setIsLoading(false);
-    };
-    fetchQuoteDetails();
-  }, [symbol]);
+    if (selectedSymbol) {
+      axios
+        .get(`http://localhost:3001/symbol/${selectedSymbol}`)
+        .then(response => {
+          console.log("mahesh", response);
+
+          setQuoteDetails(response.data);
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    }
+  }, [selectedSymbol]);
 
   return (
-    <div className="quote-details">
-      <div className="quote-details-header">
-        <h2>{symbol}</h2>
-        <button type="button" onClick={() => handleRemoveSymbol(symbol)}>
-          Remove Symbol
-        </button>
-      </div>
-      {isLoading ? (
-        <p>Loading...</p>
-      ) : errorMessage ? (
-        <p>{errorMessage}</p>
+    <div>
+      {selectedSymbol ? (
+        <Collapse defaultActiveKey={["1"] }>
+          <Collapse.Panel 
+          className="quote-details-panel"
+            style={{
+              backgroundColor: "purple",
+              color: "white",
+              fontWeight: "bold",
+              fontSize: "15px"
+            }}
+            header={<span style={{color: "white"}}>{`Quote Details for ${selectedSymbol}`}</span>}
+            key="1"
+          >
+            <span >
+              Bid: {quoteDetails.bid} &nbsp; Ask: {quoteDetails.ask} &nbsp; Bid
+              Size: {quoteDetails.bidSize} &nbsp; Ask Size:{" "}
+              {quoteDetails.askSize} &nbsp; Volume: {quoteDetails.volume} &nbsp;
+              Quote Details: {quoteDetails.quoteDetails}
+            </span>
+          </Collapse.Panel>
+        </Collapse>
       ) : (
-        <table>
-          <tbody>
-            <tr>
-              <td>Open</td>
-              <td>{quoteDetails.open}</td>
-            </tr>
-            <tr>
-              <td>High</td>
-              <td>{quoteDetails.high}</td>
-            </tr>
-            <tr>
-              <td>Low</td>
-              <td>{quoteDetails.low}</td>
-            </tr>
-            <tr>
-              <td>Close</td>
-              <td>{quoteDetails.close}</td>
-            </tr>
-            <tr>
-              <td>Volume</td>
-              <td>{quoteDetails.volume}</td>
-            </tr>
-          </tbody>
-        </table>
+        <div >Please select a symbol from the watchlist. </div>
       )}
     </div>
   );
-}
+};
 
 export default QuoteDetails;

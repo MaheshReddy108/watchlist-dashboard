@@ -1,32 +1,69 @@
-import React, { useState } from "react";
-import symbolsData from "../data/symbols.json";
+import React, { useState, useEffect } from "react";
 import { Table, Input, Button, Space } from "antd";
 import { DeleteOutlined } from "@ant-design/icons";
 import "antd/dist/reset.css";
-import "./Watchlist.css";
+import "./WatchList.css";
+import axios from "axios";
+import Swal from "sweetalert2";
+import QuoteDetails from "./QuoteDetails";
 
 const Watchlist = () => {
-  const [symbols, setSymbols] = useState(Object.entries(symbolsData));
-  const [errorMessage, setErrorMessage] = useState("");
+  const [symbols, setSymbols] = useState([]);
   const [inputValue, setInputValue] = useState("");
+  const [isRowClicked, setIsRowClicked] = useState(false);
+  const [selectedSymbol, setSelectedSymbol] = useState("");
 
-  const handleDelete = (symbol) => {
-    setSymbols((prevSymbols) =>
-      prevSymbols.filter((sym) => sym[0] !== symbol)
-    );
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    try {
+      const response = await axios.get("http://localhost:3001/watchlist/user1");
+      setSymbols(response.data);
+    } catch (error) {
+      showSweetAlert(error.response.data.error);
+    }
   };
 
-  const handleAdd = () => {
+  const handleDelete = async symbol => {
+    try {
+      await axios.delete("http://localhost:3001/watchlist/user1/remove", {
+        data: {
+          symbol
+        }
+      });
+      fetchData();
+    } catch (error) {
+      showSweetAlert(error.response.data.error);
+    }
+  };
+
+  const handleAdd = async () => {
+    console.log("here 1");
+
     if (inputValue.trim() === "") {
-      setErrorMessage("Enter valid symbol");
+      showSweetAlert("Enter a Valid Symbol");
       return;
     }
-    setSymbols((prevSymbols) => [...prevSymbols, [inputValue.toUpperCase(), {}]]);
-    setInputValue("");
-    setErrorMessage("");
+    try {
+      await axios.post("http://localhost:3001/watchlist/user1/add", {
+        symbol: inputValue.toUpperCase()
+      });
+      fetchData();
+      setInputValue("");
+    } catch (error) {
+      showSweetAlert(error.response.data.error);
+      setInputValue("");
+    }
   };
 
-  const handleUpdate = (symbol) => {
+  const handleRowClick = symbol => {
+    setIsRowClicked(true);
+    setSelectedSymbol(symbol);
+  };
+
+  const handleUpdate = symbol => {
     // Do something with the updated symbol data
   };
 
@@ -35,31 +72,32 @@ const Watchlist = () => {
       title: "Symbol",
       dataIndex: "symbol",
       key: "symbol",
+      render: text => <a onClick={() => handleRowClick(text)}>{text}</a>
     },
     {
       title: "Bid",
       dataIndex: "bid",
-      key: "bid",
+      key: "bid"
     },
     {
       title: "Ask",
       dataIndex: "ask",
-      key: "ask",
+      key: "ask"
     },
     {
       title: "Bid Size",
       dataIndex: "bidSize",
-      key: "bidSize",
+      key: "bidSize"
     },
     {
       title: "Ask Size",
       dataIndex: "askSize",
-      key: "askSize",
+      key: "askSize"
     },
     {
       title: "Volume",
       dataIndex: "volume",
-      key: "volume",
+      key: "volume"
     },
     {
       title: "Action",
@@ -77,35 +115,54 @@ const Watchlist = () => {
             <DeleteOutlined />
           </Button>
         </Space>
-      ),
-    },
+      )
+    }
   ];
 
-  const data = symbols.map(([symbol, data]) => ({
+  const data = Object.keys(symbols).map(symbol => ({
     key: symbol,
-    symbol: symbol,
-    bid: data.bid,
-    ask: data.ask,
-    bidSize: data.bidSize,
-    askSize: data.askSize,
-    volume: data.volume,
+    symbol,
+    ...symbols[symbol]
   }));
 
+  const showSweetAlert = message => {
+    Swal.fire({
+      icon: "error",
+      title: "Oops...",
+      text: message
+    });
+  };
   return (
     <div>
       <div className="watchlist-header">Watchlist Dashboard</div>
       <div className="watchlist-table-container">
-        <Table columns={columns} dataSource={data} pagination={{ pageSize: 5 }} />
-        {errorMessage && <div style={{ color: "red" }}>{errorMessage}</div>}
+        {isRowClicked ? (
+          <div style={{ marginBottom: "20px" }}>
+            <QuoteDetails selectedSymbol={selectedSymbol} />
+          </div>
+        ) : (
+          <div style={{ marginBottom: "12px" }}>Please select a symbol from the watchlist.</div>
+        )}
+        <Table
+          columns={columns}
+          dataSource={data}
+          pagination={false}
+          onRow={record => ({ onClick: () => handleRowClick(record.symbol) })}
+        />
       </div>
       <div className="watchlist-input-container">
+        <div className="watchlist-input-label">Add Symbol to Watchlist:</div>
         <Input
           placeholder="Enter Symbol"
           value={inputValue}
-          onChange={(e) => setInputValue(e.target.value)}
+          onChange={e => setInputValue(e.target.value)}
           onPressEnter={handleAdd}
         />
-        <Button type="primary" onClick={handleAdd}>
+        <Button
+          type="primary"
+          onClick={handleAdd}
+          style={{ marginLeft: "10px" }}
+        >
           Add
         </Button>
       </div>
