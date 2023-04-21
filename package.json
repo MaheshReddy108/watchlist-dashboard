@@ -8,5 +8,8 @@
     "start": "concurrently \"cd client && npm start\" \"cd server && npm start\""
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "concurrently": "^8.0.1"
+  }
 }
