@@ -25,4 +25,15 @@ const getSymbolData = async (req, res) => {
   }
 };
 
-module.exports = { getSymbolData };
+const getAllSymbols = async (req, res) => {
+  try {
+    const data = await readFile(symbolDataPath);
+    const symbols = Object.keys(JSON.parse(data));
+    res.json(symbols);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};
+
+module.exports = { getSymbolData,getAllSymbols };

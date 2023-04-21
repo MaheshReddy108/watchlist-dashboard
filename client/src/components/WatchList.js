@@ -12,10 +12,14 @@ const Watchlist = () => {
   const [inputValue, setInputValue] = useState("");
   const [isRowClicked, setIsRowClicked] = useState(false);
   const [selectedSymbol, setSelectedSymbol] = useState("");
+  const [symbolsInfo, setSymbolsInfo] = useState([]);
 
   useEffect(() => {
     fetchData();
+    fetchSymbolsInfo();
   }, []);
+  
+
 
   const fetchData = async () => {
     try {
@@ -25,6 +29,17 @@ const Watchlist = () => {
       showSweetAlert(error.response.data.error);
     }
   };
+
+  const fetchSymbolsInfo = async () => {
+      try{
+    const response = await axios.get("http://localhost:3001/allsymbols");
+    const symbols = response.data;
+    setSymbolsInfo(symbols);
+    } catch(error){
+        console.log(error);
+        showSweetAlert(error.response.data.error);
+    }
+};
 
   const handleDelete = async symbol => {
     try {
@@ -63,9 +78,35 @@ const Watchlist = () => {
     setSelectedSymbol(symbol);
   };
 
-  const handleUpdate = symbol => {
-    // Do something with the updated symbol data
+  const handleUpdate = async symbol => {
+    try {
+      const response = await axios.get(`http://localhost:3001/symbol/${symbol}`);
+      const updatedData = response.data;
+      const newData = Object.keys(symbols).map(key => {
+        if (key === symbol) {
+          const updatedRow = {
+            ...symbols[key],
+            ...updatedData
+          };
+          return {
+            key,
+            symbol: key,
+            ...updatedRow
+          };
+        } else {
+          return {
+            key,
+            symbol: key,
+            ...symbols[key]
+          };
+        }
+      });
+      setSymbols(newData);
+    } catch (error) {
+      showSweetAlert(error.response.data.error);
+    }
   };
+  
 
   const columns = [
     {
@@ -166,6 +207,7 @@ const Watchlist = () => {
           Add
         </Button>
       </div>
+      <p>Available Symbols: {symbolsInfo.join(', ')}</p>
     </div>
   );
 };

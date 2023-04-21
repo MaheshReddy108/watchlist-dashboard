@@ -5,7 +5,7 @@
     "bidSize": 101,
     "askSize": 75,
     "volume": 764700,
-    "quoteDetails": "this is SPY"
+    "quoteDetails": "SPDR S&P 500 ETF Trust (SPY) tracks the S&P 500 index, providing exposure to 500 large-cap U.S. stocks across multiple sectors."
   },
   "DJI": {
     "bid": 33929,
@@ -13,7 +13,7 @@
     "bidSize": 49,
     "askSize": 42,
     "volume": 160200000,
-    "quoteDetails": "this is DJI"
+    "quoteDetails": "The Dow Jones Industrial Average (DJI) is a price-weighted average of 30 significant stocks traded on the New York Stock Exchange (NYSE) and the NASDAQ."
   },
   "RUS": {
     "bid": 2305.79,
@@ -21,7 +21,7 @@
     "bidSize": 101,
     "askSize": 75,
     "volume": 1270700,
-    "quoteDetails": "this is RUS"
+    "quoteDetails": "The Russell 2000 Index (RUS) measures the performance of 2,000 small-cap U.S. companies based on market capitalization."
   },
   "NDX": {
     "bid": 14106.88,
@@ -29,7 +29,7 @@
     "bidSize": 26,
     "askSize": 31,
     "volume": 217619900,
-    "quoteDetails": "this is NDX"
+    "quoteDetails": "The NASDAQ-100 Index (NDX) tracks the performance of 100 non-financial companies listed on the NASDAQ stock exchange."
   },
   "TSLA": {
     "bid": 719.32,
@@ -37,7 +37,7 @@
     "bidSize": 47,
     "askSize": 31,
     "volume": 2720400,
-    "quoteDetails": "this is TSLA"
+    "quoteDetails": "Tesla Inc. (TSLA) is an American electric vehicle and clean energy company, known for producing electric cars, battery energy storage, and solar products."
   },
   "AAPL": {
     "bid": 132.88,
@@ -45,7 +45,7 @@
     "bidSize": 50,
     "askSize": 55,
     "volume": 8000000,
-    "quoteDetails": "This is Apple Inc."
+    "quoteDetails": "Apple Inc. (AAPL) designs, manufactures, and markets smartphones, personal computers, tablets, wearables, and accessories, as well as offers services such as the App Store, iCloud, Apple Music, and Apple TV+."
     },
     "GOOGL": {
     "bid": 2412.34,
@@ -53,7 +53,7 @@
     "bidSize": 20,
     "askSize": 35,
     "volume": 1200000,
-    "quoteDetails": "This is Alphabet Inc."
+    "quoteDetails": "Alphabet Inc. (GOOGL) is a multinational conglomerate that provides online search, advertising, and streaming services through its Google brand, as well as offers hardware products such as the Pixel smartphone and Google Home smart speaker."
     },
     "AMZN": {
     "bid": 3280.01,
@@ -61,22 +61,6 @@
     "bidSize": 30,
     "askSize": 25,
     "volume": 500000,
-    "quoteDetails": "This is Amazon.com Inc."
-    },
-    "MSFT": {
-    "bid": 257.17,
-    "ask": 257.19,
-    "bidSize": 80,
-    "askSize": 60,
-    "volume": 3000000,
-    "quoteDetails": "This is Microsoft Corporation."
-    },
-    "NFLX": {
-    "bid": 501.23,
-    "ask": 501.26,
-    "bidSize": 15,
-    "askSize": 10,
-    "volume": 700000,
-    "quoteDetails": "This is Netflix Inc."
+    "quoteDetails": "Amazon.com Inc. (AMZN) is an American multinational technology company that focuses on e-commerce, cloud computing, digital streaming, and artificial intelligence."
     }
-}
+  }

@@ -3,7 +3,6 @@ import axios from "axios";
 import { Collapse } from "antd";
 import "./QuoteDetails.css";
 
-
 const QuoteDetails = ({ selectedSymbol }) => {
   const [quoteDetails, setQuoteDetails] = useState({});
 
@@ -25,28 +24,33 @@ const QuoteDetails = ({ selectedSymbol }) => {
   return (
     <div>
       {selectedSymbol ? (
-        <Collapse defaultActiveKey={["1"] }>
-          <Collapse.Panel 
-          className="quote-details-panel"
+        <Collapse defaultActiveKey={["1"]}>
+          <Collapse.Panel
+            className="quote-details-panel"
             style={{
               backgroundColor: "purple",
               color: "white",
               fontWeight: "bold",
               fontSize: "15px"
             }}
-            header={<span style={{color: "white"}}>{`Quote Details for ${selectedSymbol}`}</span>}
+            header={
+              <span
+                style={{ color: "white" }}
+              >{`Quote Details for ${selectedSymbol}`}</span>
+            }
             key="1"
           >
-            <span >
+            <span>
               Bid: {quoteDetails.bid} &nbsp; Ask: {quoteDetails.ask} &nbsp; Bid
               Size: {quoteDetails.bidSize} &nbsp; Ask Size:{" "}
-              {quoteDetails.askSize} &nbsp; Volume: {quoteDetails.volume} &nbsp;
+              {quoteDetails.askSize} &nbsp; Volume: {quoteDetails.volume}
+              <br />
               Quote Details: {quoteDetails.quoteDetails}
             </span>
           </Collapse.Panel>
         </Collapse>
       ) : (
-        <div >Please select a symbol from the watchlist. </div>
+        <div>Please select a symbol from the watchlist. </div>
       )}
     </div>
   );
