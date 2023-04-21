@@ -38,5 +38,45 @@
     "askSize": 31,
     "volume": 2720400,
     "quoteDetails": "this is TSLA"
-  }
+  },
+  "AAPL": {
+    "bid": 132.88,
+    "ask": 132.9,
+    "bidSize": 50,
+    "askSize": 55,
+    "volume": 8000000,
+    "quoteDetails": "This is Apple Inc."
+    },
+    "GOOGL": {
+    "bid": 2412.34,
+    "ask": 2414.89,
+    "bidSize": 20,
+    "askSize": 35,
+    "volume": 1200000,
+    "quoteDetails": "This is Alphabet Inc."
+    },
+    "AMZN": {
+    "bid": 3280.01,
+    "ask": 3282.56,
+    "bidSize": 30,
+    "askSize": 25,
+    "volume": 500000,
+    "quoteDetails": "This is Amazon.com Inc."
+    },
+    "MSFT": {
+    "bid": 257.17,
+    "ask": 257.19,
+    "bidSize": 80,
+    "askSize": 60,
+    "volume": 3000000,
+    "quoteDetails": "This is Microsoft Corporation."
+    },
+    "NFLX": {
+    "bid": 501.23,
+    "ask": 501.26,
+    "bidSize": 15,
+    "askSize": 10,
+    "volume": 700000,
+    "quoteDetails": "This is Netflix Inc."
+    }
 }
