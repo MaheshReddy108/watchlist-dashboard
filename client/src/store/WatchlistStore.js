@@ -16,26 +16,28 @@ class WatchlistStore {
       isRowClicked: observable,
       selectedSymbol: observable,
       symbolsInfo: observable,
+      setInputValue: action,
       fetchData: action,
       fetchSymbolsInfo: action,
       handleDelete: action,
       handleAdd: action,
       handleRowClick: action,
-      handleUpdate: action,
+      handleUpdate: action
     });
   }
 
   fetchData = async () => {
     try {
-      const response = await axios.get(
-        "http://localhost:3001/watchlist/user1"
-      );
+      const response = await axios.get("http://localhost:3001/watchlist/user1");
       this.symbols = response.data;
     } catch (error) {
       this.showSweetAlert(error.response.data.error);
     }
   };
 
+  setInputValue = async value => {
+    this.inputValue = value;
+  };
   fetchSymbolsInfo = async () => {
     try {
       const response = await axios.get("http://localhost:3001/allsymbols");
@@ -47,12 +49,12 @@ class WatchlistStore {
     }
   };
 
-  handleDelete = async (symbol) => {
+  handleDelete = async symbol => {
     try {
       await axios.delete("http://localhost:3001/watchlist/user1/remove", {
         data: {
-          symbol,
-        },
+          symbol
+        }
       });
       this.fetchData();
     } catch (error) {
@@ -67,7 +69,7 @@ class WatchlistStore {
     }
     try {
       await axios.post("http://localhost:3001/watchlist/user1/add", {
-        symbol: this.inputValue.toUpperCase(),
+        symbol: this.inputValue.toUpperCase()
       });
       this.fetchData();
       this.inputValue = "";
@@ -77,33 +79,33 @@ class WatchlistStore {
     }
   };
 
-  handleRowClick = (symbol) => {
+  handleRowClick = symbol => {
     this.isRowClicked = true;
     this.selectedSymbol = symbol;
   };
 
-  handleUpdate = async (symbol) => {
+  handleUpdate = async symbol => {
     try {
       const response = await axios.get(
         `http://localhost:3001/symbol/${symbol}`
       );
       const updatedData = response.data;
-      const newData = Object.keys(this.symbols).map((key) => {
+      const newData = Object.keys(this.symbols).map(key => {
         if (key === symbol) {
           const updatedRow = {
             ...this.symbols[key],
-            ...updatedData,
+            ...updatedData
           };
           return {
             key,
             symbol: key,
-            ...updatedRow,
+            ...updatedRow
           };
         } else {
           return {
             key,
             symbol: key,
-            ...this.symbols[key],
+            ...this.symbols[key]
           };
         }
       });
@@ -113,11 +115,11 @@ class WatchlistStore {
     }
   };
 
-  showSweetAlert = (message) => {
+  showSweetAlert = message => {
     Swal.fire({
       icon: "error",
       title: "Oops...",
-      text: message,
+      text: message
     });
   };
 }

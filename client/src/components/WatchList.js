@@ -16,6 +16,7 @@ const Watchlist = observer(() => {
     selectedSymbol,
     symbolsInfo,
     fetchData,
+    setInputValue,
     fetchSymbolsInfo,
     handleDelete,
     handleAdd,
@@ -26,7 +27,7 @@ const Watchlist = observer(() => {
   useEffect(() => {
     fetchData();
     fetchSymbolsInfo();
-  }, []);
+  });
 
   const columns = [
     {
@@ -67,7 +68,6 @@ const Watchlist = observer(() => {
         <Space>
           <Button
             type="primary"
-            style={{ backgroundColor: "#52c41a" }}
             onClick={() => handleUpdate(record.symbol)}
           >
             Update
@@ -91,12 +91,12 @@ const Watchlist = observer(() => {
       <div className="watchlist-header">Watchlist Dashboard</div>
       <div className="watchlist-table-container">
         {isRowClicked ? (
-          <div style={{ marginBottom: "20px" }}>
+          <div >
             <QuoteDetails selectedSymbol={selectedSymbol} />
           </div>
         ) : (
-          <div style={{ marginBottom: "12px" }}>
-            Please select a symbol from the watchlist.
+          <div style={{ marginBottom: "12px" }} >
+            Please select a symbol from the watchlist below to view Quote Details
           </div>
         )}
         <Table
@@ -111,18 +111,17 @@ const Watchlist = observer(() => {
         <Input
           placeholder="Enter Symbol"
           value={inputValue}
-          onChange={e => (inputValue = e.target.value)}
+          onChange={e => setInputValue(e.target.value)}
           onPressEnter={handleAdd}
         />
         <Button
           type="primary"
           onClick={handleAdd}
-          style={{ marginLeft: "10px" }}
         >
           Add
         </Button>
       </div>
-      <p>Available Symbols: {symbolsInfo.join(", ")}</p>
+      <p >Available Symbols: {symbolsInfo.join(", ")}</p>
     </div>
   );
 });
