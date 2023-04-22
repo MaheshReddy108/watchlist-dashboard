@@ -9,12 +9,10 @@ const readFile = util.promisify(fs.readFile);
 const getWatchlistData = async (req, res) => {
   try {
     const { accountId } = req.params;
-    console.log("Mahesh accountId", accountId);
-    
+
     // Read the watchlist data from watchlist.json
     const watchlistData = await readFile(watchlistDataPath, 'utf8');
     const {watchlist} = JSON.parse(watchlistData)[accountId];
-    console.log("Mahesh accountId", watchlist);
     if (!watchlist) {
       return res
         .status(404)

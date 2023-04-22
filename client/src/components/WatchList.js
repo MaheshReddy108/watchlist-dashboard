@@ -1,112 +1,32 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { Table, Input, Button, Space } from "antd";
 import { DeleteOutlined } from "@ant-design/icons";
 import "antd/dist/reset.css";
+import { observer } from "mobx-react-lite";
 import "./WatchList.css";
-import axios from "axios";
-import Swal from "sweetalert2";
 import QuoteDetails from "./QuoteDetails";
+import watchlistStore from "../store/WatchlistStore";
 
-const Watchlist = () => {
-  const [symbols, setSymbols] = useState([]);
-  const [inputValue, setInputValue] = useState("");
-  const [isRowClicked, setIsRowClicked] = useState(false);
-  const [selectedSymbol, setSelectedSymbol] = useState("");
-  const [symbolsInfo, setSymbolsInfo] = useState([]);
+const Watchlist = observer(() => {
+  // Wrap the component with observer
+  const {
+    symbols,
+    inputValue,
+    isRowClicked,
+    selectedSymbol,
+    symbolsInfo,
+    fetchData,
+    fetchSymbolsInfo,
+    handleDelete,
+    handleAdd,
+    handleRowClick,
+    handleUpdate
+  } = watchlistStore; // Destructure the store's properties and methods
 
   useEffect(() => {
     fetchData();
     fetchSymbolsInfo();
   }, []);
-  
-
-
-  const fetchData = async () => {
-    try {
-      const response = await axios.get("http://localhost:3001/watchlist/user1");
-      setSymbols(response.data);
-    } catch (error) {
-      showSweetAlert(error.response.data.error);
-    }
-  };
-
-  const fetchSymbolsInfo = async () => {
-      try{
-    const response = await axios.get("http://localhost:3001/allsymbols");
-    const symbols = response.data;
-    setSymbolsInfo(symbols);
-    } catch(error){
-        console.log(error);
-        showSweetAlert(error.response.data.error);
-    }
-};
-
-  const handleDelete = async symbol => {
-    try {
-      await axios.delete("http://localhost:3001/watchlist/user1/remove", {
-        data: {
-          symbol
-        }
-      });
-      fetchData();
-    } catch (error) {
-      showSweetAlert(error.response.data.error);
-    }
-  };
-
-  const handleAdd = async () => {
-    console.log("here 1");
-
-    if (inputValue.trim() === "") {
-      showSweetAlert("Enter a Valid Symbol");
-      return;
-    }
-    try {
-      await axios.post("http://localhost:3001/watchlist/user1/add", {
-        symbol: inputValue.toUpperCase()
-      });
-      fetchData();
-      setInputValue("");
-    } catch (error) {
-      showSweetAlert(error.response.data.error);
-      setInputValue("");
-    }
-  };
-
-  const handleRowClick = symbol => {
-    setIsRowClicked(true);
-    setSelectedSymbol(symbol);
-  };
-
-  const handleUpdate = async symbol => {
-    try {
-      const response = await axios.get(`http://localhost:3001/symbol/${symbol}`);
-      const updatedData = response.data;
-      const newData = Object.keys(symbols).map(key => {
-        if (key === symbol) {
-          const updatedRow = {
-            ...symbols[key],
-            ...updatedData
-          };
-          return {
-            key,
-            symbol: key,
-            ...updatedRow
-          };
-        } else {
-          return {
-            key,
-            symbol: key,
-            ...symbols[key]
-          };
-        }
-      });
-      setSymbols(newData);
-    } catch (error) {
-      showSweetAlert(error.response.data.error);
-    }
-  };
-  
 
   const columns = [
     {
@@ -166,13 +86,6 @@ const Watchlist = () => {
     ...symbols[symbol]
   }));
 
-  const showSweetAlert = message => {
-    Swal.fire({
-      icon: "error",
-      title: "Oops...",
-      text: message
-    });
-  };
   return (
     <div>
       <div className="watchlist-header">Watchlist Dashboard</div>
@@ -182,7 +95,9 @@ const Watchlist = () => {
             <QuoteDetails selectedSymbol={selectedSymbol} />
           </div>
         ) : (
-          <div style={{ marginBottom: "12px" }}>Please select a symbol from the watchlist.</div>
+          <div style={{ marginBottom: "12px" }}>
+            Please select a symbol from the watchlist.
+          </div>
         )}
         <Table
           columns={columns}
@@ -196,7 +111,7 @@ const Watchlist = () => {
         <Input
           placeholder="Enter Symbol"
           value={inputValue}
-          onChange={e => setInputValue(e.target.value)}
+          onChange={e => (inputValue = e.target.value)}
           onPressEnter={handleAdd}
         />
         <Button
@@ -207,9 +122,9 @@ const Watchlist = () => {
           Add
         </Button>
       </div>
-      <p>Available Symbols: {symbolsInfo.join(', ')}</p>
+      <p>Available Symbols: {symbolsInfo.join(", ")}</p>
     </div>
   );
-};
+});
 
 export default Watchlist;

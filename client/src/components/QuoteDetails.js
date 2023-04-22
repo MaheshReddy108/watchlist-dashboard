@@ -1,19 +1,18 @@
-import React, { useState, useEffect } from "react";
+
+import React, { useEffect } from "react";
 import axios from "axios";
 import { Collapse } from "antd";
+import { observer } from "mobx-react-lite";
+import quoteDetailsStore from "../store/QuoteDetailsStore";
 import "./QuoteDetails.css";
 
 const QuoteDetails = ({ selectedSymbol }) => {
-  const [quoteDetails, setQuoteDetails] = useState({});
-
   useEffect(() => {
     if (selectedSymbol) {
       axios
         .get(`http://localhost:3001/symbol/${selectedSymbol}`)
         .then(response => {
-          console.log("mahesh", response);
-
-          setQuoteDetails(response.data);
+          quoteDetailsStore.setQuoteDetails(response.data);
         })
         .catch(error => {
           console.log(error);
@@ -41,11 +40,13 @@ const QuoteDetails = ({ selectedSymbol }) => {
             key="1"
           >
             <span>
-              Bid: {quoteDetails.bid} &nbsp; Ask: {quoteDetails.ask} &nbsp; Bid
-              Size: {quoteDetails.bidSize} &nbsp; Ask Size:{" "}
-              {quoteDetails.askSize} &nbsp; Volume: {quoteDetails.volume}
+              Bid: {quoteDetailsStore.quoteDetails.bid} &nbsp; Ask:{" "}
+              {quoteDetailsStore.quoteDetails.ask} &nbsp; Bid Size:{" "}
+              {quoteDetailsStore.quoteDetails.bidSize} &nbsp; Ask Size:{" "}
+              {quoteDetailsStore.quoteDetails.askSize} &nbsp; Volume:{" "}
+              {quoteDetailsStore.quoteDetails.volume}
               <br />
-              Quote Details: {quoteDetails.quoteDetails}
+              Quote Details: {quoteDetailsStore.quoteDetails.quoteDetails}
             </span>
           </Collapse.Panel>
         </Collapse>
@@ -56,4 +57,4 @@ const QuoteDetails = ({ selectedSymbol }) => {
   );
 };
 
-export default QuoteDetails;
+export default observer(QuoteDetails);

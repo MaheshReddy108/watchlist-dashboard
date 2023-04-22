@@ -5,12 +5,13 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "concurrently \"cd client && npm install && npm start\" \"cd server && npm install && npm start\""
+    "start": "concurrently \"cd client  && npm start\" \"cd server  && npm start\""
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "concurrently": "^8.0.1",
+    "mobx-react-lite": "^3.4.3",
     "nodemon": "^2.0.22"
   }
 }
