@@ -1,6 +1,6 @@
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
-import Watchlist from "./Watchlist";
+import Watchlist from "../components/WatchList.js";
 
 describe("Watchlist component", () => {
   test("renders Watchlist Dashboard header", () => {

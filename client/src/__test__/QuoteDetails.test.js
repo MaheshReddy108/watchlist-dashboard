@@ -2,7 +2,7 @@ import React from "react";
 import axios from "axios";
 import { render, waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom/extend-expect";
-import QuoteDetails from "./QuoteDetails";
+import QuoteDetails from "../components/QuoteDetails.js";
 import quoteDetailsStore from "../store/QuoteDetailsStore";
 
 jest.mock("axios");
