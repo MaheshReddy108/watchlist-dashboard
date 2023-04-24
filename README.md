@@ -58,7 +58,7 @@ The state of the application is managed in the ```client/src/store``` directory,
 - The tests ensure error handling and empty state handling for both the frontend and backend.
 
 ## Deployment <a name = "Deployment"></a>
-The Watchlist Dashboard is deployed to an AWS EC2 instance and can be accessed via this URL: URL: [http://3.138.206.240:3000/](http://3.138.206.240:3000/).
+The Watchlist Dashboard is deployed to an AWS EC2 instance and can be accessed via this URL: URL: [http://ec2-34-228-186-204.compute-1.amazonaws.com:3000/](http://ec2-34-228-186-204.compute-1.amazonaws.com:3000/).
 
 The server is currently paused due to billing issues, If you would like to view the watchlist dashboard application hosted on AWS, please let me know so that I can resume the server.
 
