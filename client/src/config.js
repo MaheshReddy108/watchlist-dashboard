@@ -1,3 +1,3 @@
-const host = "172.31.21.15";
+const host = "3.95.239.250";
 
 module.exports = { host };
