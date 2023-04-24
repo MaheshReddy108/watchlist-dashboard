@@ -12,6 +12,8 @@ const getWatchlistData = async (req, res) => {
 
     // Read the watchlist data from watchlist.json
     const watchlistData = await readFile(watchlistDataPath, 'utf8');
+    console.log("mahesh", watchlistData);
+    
     const {watchlist} = JSON.parse(watchlistData)[accountId];
     if (!watchlist) {
       return res

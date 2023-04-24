@@ -31,7 +31,7 @@ const Watchlist = observer(() => {
   console.log("mahesh", selectedUser);
   
   useEffect(() => {
-    fetchData(selectedUser);
+    fetchData();
     fetchSymbolsInfo();
   },[selectedUser]);
 
