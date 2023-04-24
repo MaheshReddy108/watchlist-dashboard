@@ -1,7 +1,7 @@
 import { makeObservable, observable, action } from "mobx";
 import axios from "axios";
 import Swal from "sweetalert2";
-const {host} = require ('../config')
+const { host } = require("../config");
 
 class WatchlistStore {
   symbols = [];
@@ -9,7 +9,7 @@ class WatchlistStore {
   isRowClicked = false;
   selectedSymbol = "";
   symbolsInfo = [];
-  selectedUser  = "user1"
+  selectedUser = "user1";
 
   constructor() {
     makeObservable(this, {
@@ -18,8 +18,8 @@ class WatchlistStore {
       isRowClicked: observable,
       selectedSymbol: observable,
       symbolsInfo: observable,
-      selectedUser:observable,
-      setSelectedUser : action,
+      selectedUser: observable,
+      setSelectedUser: action,
       setInputValue: action,
       fetchData: action,
       fetchSymbolsInfo: action,
@@ -30,12 +30,18 @@ class WatchlistStore {
     });
   }
 
-
-
   fetchData = async () => {
     try {
-      const response = await axios.get(`http://${host}:3001/watchlist/${this.selectedUser}`);
-      this.symbols = response.data;
+      const response = await fetch(
+        `http://${host}:3001/watchlist/${this.selectedUser}`,
+        {
+          headers: {
+            "Content-Type": "application/json"
+          }
+        }
+      );
+      const data = await response.json();
+      this.symbols = data;
     } catch (error) {
       this.showSweetAlert(error.response.data.error);
     }
@@ -44,13 +50,19 @@ class WatchlistStore {
   setSelectedUser = async user => {
     this.selectedUser = user;
   };
+
   setInputValue = async value => {
     this.inputValue = value;
   };
+
   fetchSymbolsInfo = async () => {
     try {
-      const response = await axios.get(`http://${host}:3001/allsymbols`);
-      const symbols = response.data;
+      const response = await fetch(`http://${host}:3001/allsymbols`, {
+        headers: {
+          "Content-Type": "application/json"
+        }
+      });
+      const symbols = await response.json();
       this.symbolsInfo = symbols;
     } catch (error) {
       console.log(error);
@@ -60,11 +72,16 @@ class WatchlistStore {
 
   handleDelete = async symbol => {
     try {
-      await axios.delete(`http://${host}:3001/watchlist/${this.selectedUser}/remove`, {
-        data: {
-          symbol
+      const response = await fetch(
+        `http://${host}:3001/watchlist/${this.selectedUser}/remove`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ symbol })
         }
-      });
+      );
       await this.fetchData();
     } catch (error) {
       this.showSweetAlert(error.response.data.error);
@@ -77,9 +94,16 @@ class WatchlistStore {
       return;
     }
     try {
-      await axios.post(`http://${host}:3001/watchlist/${this.selectedUser}/add`, {
-        symbol: this.inputValue.toUpperCase()
-      });
+      const response = await fetch(
+        `http://${host}:3001/watchlist/${this.selectedUser}/add`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ symbol: this.inputValue.toUpperCase() })
+        }
+      );
       await this.fetchData();
       this.showSweetAlert(
         `Symbol "${this.inputValue.toUpperCase()}" has been added successfully.`,
@@ -100,10 +124,8 @@ class WatchlistStore {
 
   handleUpdate = async symbol => {
     try {
-      const response = await axios.get(
-        `http://${host}:3001/symbol/${symbol}`
-      );
-      const updatedData = response.data;
+      const response = await fetch(`http://${host}:3001/symbol/${symbol}`);
+      const updatedData = await response.json();
       const newData = Object.keys(this.symbols).map(key => {
         if (key === symbol) {
           const updatedRow = {

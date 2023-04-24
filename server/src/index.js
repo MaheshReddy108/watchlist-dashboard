@@ -8,14 +8,12 @@ const app = express();
 const PORT = process.env.PORT || 3001;
 
 const corsOptions = {
-  origin: '*',
-  methods: ['GET', 'PUT', 'POST', 'DELETE'],
-  preflightContinue: false,
-  optionsSuccessStatus: 204
+  origin: 'http://3.95.239.250',
+  optionsSuccessStatus: 200
 };
 
 // Middleware
-app.use(cors(corsOptions));
+app.use(corsOptions);
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
