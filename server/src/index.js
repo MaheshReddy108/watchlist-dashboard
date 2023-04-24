@@ -25,7 +25,7 @@ const corsOptions = {
 //   next();
 // });
 
-Middleware
+// Middleware
 app.use(cors({
   preflightContinue: false,
   optionsSuccessStatus: 204,
