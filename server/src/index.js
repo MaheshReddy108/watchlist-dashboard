@@ -7,11 +7,13 @@ const watchlistRouter = require('./routes/watchlist')
 const app = express();
 const PORT = process.env.PORT || 3001;
 
+const corsOptions = {
+  origin: 'http://3.95.239.250',
+  optionsSuccessStatus: 200
+};
+
 // Middleware
-app.use(cors({
-  preflightContinue: false,
-  optionsSuccessStatus: 204,
-}));
+app.use(corsOptions);
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
