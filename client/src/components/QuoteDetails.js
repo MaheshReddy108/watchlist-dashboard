@@ -5,7 +5,7 @@ import { Collapse } from "antd";
 import { observer } from "mobx-react-lite";
 import quoteDetailsStore from "../store/QuoteDetailsStore";
 import "./QuoteDetails.css";
-var host = "127.0.0.1";
+var host = "ec2-34-228-186-204.compute-1.amazonaws.com";
 
 const QuoteDetails = ({ selectedSymbol }) => {
   useEffect(() => {
