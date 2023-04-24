@@ -104,7 +104,10 @@ class WatchlistStore {
           body: JSON.stringify({ symbol: this.inputValue.toUpperCase() })
         }
       );
-      await this.fetchData();
+      // await this.fetchData();
+      setTimeout(() => {
+        this.fetchData();
+      }, 10000);
       this.showSweetAlert(
         `Symbol "${this.inputValue.toUpperCase()}" has been added successfully.`,
         "success",
