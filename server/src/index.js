@@ -13,7 +13,10 @@ const corsOptions = {
 };
 
 // Middleware
-app.use(cors(corsOptions));
+app.use(cors({
+  preflightContinue: false,
+  optionsSuccessStatus: 204,
+}));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
