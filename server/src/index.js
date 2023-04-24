@@ -9,7 +9,8 @@ const PORT = process.env.PORT || 3001;
 
 // Middleware
 app.use(cors({
-  preflightContinue: true
+  preflightContinue: false,
+  optionsSuccessStatus: 204,
 }));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
