@@ -1,11 +1,13 @@
 import React, { useEffect } from "react";
-import { Table, Input, Button, Space } from "antd";
+import { Select,Table, Input, Button, Space } from "antd";
 import { DeleteOutlined } from "@ant-design/icons";
 import "antd/dist/reset.css";
 import { observer } from "mobx-react-lite";
 import "./WatchList.css";
 import QuoteDetails from "./QuoteDetails";
-import watchlistStore from "../store/WatchlistStore";
+import watchlistStore from "../store/WatchListStore.js";
+
+const {Option} = Select;
 
 const Watchlist = observer(() => {
   // Wrap the component with observer
@@ -15,6 +17,8 @@ const Watchlist = observer(() => {
     isRowClicked,
     selectedSymbol,
     symbolsInfo,
+    selectedUser,
+    setSelectedUser,
     fetchData,
     setInputValue,
     fetchSymbolsInfo,
@@ -24,10 +28,12 @@ const Watchlist = observer(() => {
     handleUpdate
   } = watchlistStore; // Destructure the store's properties and methods
 
+  console.log("mahesh", selectedUser);
+  
   useEffect(() => {
-    fetchData();
+    fetchData(selectedUser);
     fetchSymbolsInfo();
-  });
+  },[selectedUser]);
 
   const columns = [
     {
@@ -66,7 +72,7 @@ const Watchlist = observer(() => {
       key: "action",
       render: (_, record) => (
         <Space>
-          <Button
+          <Button className = "watchlist-update-btn"
             type="primary"
             onClick={() => handleUpdate(record.symbol)}
           >
@@ -88,7 +94,10 @@ const Watchlist = observer(() => {
 
   return (
     <div>
-      <div className="watchlist-header">Watchlist Dashboard</div>
+      <div className="watchlist-header"> <Select value={selectedUser} onChange={setSelectedUser} style={{ marginRight: "12px" }}>
+          <Option value="user1">user1</Option>
+          <Option value="user2">user2</Option>
+        </Select>Watchlist Dashboard</div>
       <div className="watchlist-table-container">
         {isRowClicked ? (
           <div >

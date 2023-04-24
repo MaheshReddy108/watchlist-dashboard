@@ -8,6 +8,7 @@ class WatchlistStore {
   isRowClicked = false;
   selectedSymbol = "";
   symbolsInfo = [];
+  selectedUser  = "user1"
 
   constructor() {
     makeObservable(this, {
@@ -16,6 +17,8 @@ class WatchlistStore {
       isRowClicked: observable,
       selectedSymbol: observable,
       symbolsInfo: observable,
+      selectedUser:observable,
+      setSelectedUser : action,
       setInputValue: action,
       fetchData: action,
       fetchSymbolsInfo: action,
@@ -28,13 +31,16 @@ class WatchlistStore {
 
   fetchData = async () => {
     try {
-      const response = await axios.get("http://localhost:3001/watchlist/user1");
+      const response = await axios.get(`http://localhost:3001/watchlist/${this.selectedUser}`);
       this.symbols = response.data;
     } catch (error) {
       this.showSweetAlert(error.response.data.error);
     }
   };
 
+  setSelectedUser = async user => {
+    this.selectedUser = user;
+  };
   setInputValue = async value => {
     this.inputValue = value;
   };
@@ -51,7 +57,7 @@ class WatchlistStore {
 
   handleDelete = async symbol => {
     try {
-      await axios.delete("http://localhost:3001/watchlist/user1/remove", {
+      await axios.delete(`http://localhost:3001/watchlist/${this.selectedUser}/remove`, {
         data: {
           symbol
         }
@@ -68,10 +74,15 @@ class WatchlistStore {
       return;
     }
     try {
-      await axios.post("http://localhost:3001/watchlist/user1/add", {
+      await axios.post(`http://localhost:3001/watchlist/${this.selectedUser}/add`, {
         symbol: this.inputValue.toUpperCase()
       });
       this.fetchData();
+      this.showSweetAlert(
+        `Symbol "${this.inputValue.toUpperCase()}" has been added successfully.`,
+        "success",
+        "Success!"
+      );
       this.inputValue = "";
     } catch (error) {
       this.showSweetAlert(error.response.data.error);
@@ -109,17 +120,25 @@ class WatchlistStore {
           };
         }
       });
+      this.showSweetAlert(
+        `Symbol "${symbol}" has been updated successfully.`,
+        "success",
+        "Success!"
+      );
       this.symbols = newData;
     } catch (error) {
       this.showSweetAlert(error.response.data.error);
     }
   };
 
-  showSweetAlert = message => {
+  showSweetAlert = (message, icon = "error", title = "Oops...") => {
     Swal.fire({
-      icon: "error",
-      title: "Oops...",
-      text: message
+      icon: icon,
+      title: title,
+      text: message,
+      showConfirmButton: false,
+      timer: 2000,
+      timerProgressBar: true
     });
   };
 }
