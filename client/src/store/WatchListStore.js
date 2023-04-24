@@ -1,7 +1,7 @@
 import { makeObservable, observable, action } from "mobx";
 import axios from "axios";
 import Swal from "sweetalert2";
-var host = "ec2-3-95-239-250.compute-1.amazonaws.com";
+const {host} = require ('../config')
 
 class WatchlistStore {
   symbols = [];
