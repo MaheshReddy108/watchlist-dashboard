@@ -1,3 +1,3 @@
-const host = "ec2-3-95-239-250.compute-1.amazonaws.com";
+const host = "172.31.21.15";
 
 module.exports = { host };
