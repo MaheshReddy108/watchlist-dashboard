@@ -65,7 +65,7 @@ class WatchlistStore {
           symbol
         }
       });
-      this.fetchData();
+      await this.fetchData();
     } catch (error) {
       this.showSweetAlert(error.response.data.error);
     }
@@ -80,7 +80,7 @@ class WatchlistStore {
       await axios.post(`http://${host}:3001/watchlist/${this.selectedUser}/add`, {
         symbol: this.inputValue.toUpperCase()
       });
-      this.fetchData();
+      await this.fetchData();
       this.showSweetAlert(
         `Symbol "${this.inputValue.toUpperCase()}" has been added successfully.`,
         "success",
