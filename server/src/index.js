@@ -8,7 +8,9 @@ const app = express();
 const PORT = process.env.PORT || 3001;
 
 // Middleware
-app.use(cors());
+app.use(cors({
+  preflightContinue: true
+}));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
@@ -19,4 +21,4 @@ app.use('/',watchlistRouter );
 
 app.listen(PORT, () => {
     console.log(`Server listening on port ${PORT}`);
-  });
+});
