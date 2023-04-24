@@ -30,6 +30,9 @@ res.setHeader('Access-Control-Allow-Headers', 'origin, content-type, accept, x-r
 //     response.addHeader("Access-Control-Allow-Headers", "origin, content-type, accept, x-requested-with");
 //     response.addHeader("Access-Control-Max-Age", "3600");
 
+
+app.options('*', cors())
+
 // Middleware
 app.use(cors({
   preflightContinue: false,
