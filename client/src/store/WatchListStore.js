@@ -1,6 +1,7 @@
 import { makeObservable, observable, action } from "mobx";
 import axios from "axios";
 import Swal from "sweetalert2";
+var host = "127.0.0.1";
 
 class WatchlistStore {
   symbols = [];
@@ -29,9 +30,11 @@ class WatchlistStore {
     });
   }
 
+
+
   fetchData = async () => {
     try {
-      const response = await axios.get(`http://localhost:3001/watchlist/${this.selectedUser}`);
+      const response = await axios.get(`http://${host}:3001/watchlist/${this.selectedUser}`);
       this.symbols = response.data;
     } catch (error) {
       this.showSweetAlert(error.response.data.error);
@@ -46,7 +49,7 @@ class WatchlistStore {
   };
   fetchSymbolsInfo = async () => {
     try {
-      const response = await axios.get("http://localhost:3001/allsymbols");
+      const response = await axios.get(`http://${host}:3001/allsymbols`);
       const symbols = response.data;
       this.symbolsInfo = symbols;
     } catch (error) {
@@ -57,7 +60,7 @@ class WatchlistStore {
 
   handleDelete = async symbol => {
     try {
-      await axios.delete(`http://localhost:3001/watchlist/${this.selectedUser}/remove`, {
+      await axios.delete(`http://${host}:3001/watchlist/${this.selectedUser}/remove`, {
         data: {
           symbol
         }
@@ -74,7 +77,7 @@ class WatchlistStore {
       return;
     }
     try {
-      await axios.post(`http://localhost:3001/watchlist/${this.selectedUser}/add`, {
+      await axios.post(`http://${host}:3001/watchlist/${this.selectedUser}/add`, {
         symbol: this.inputValue.toUpperCase()
       });
       this.fetchData();
@@ -98,7 +101,7 @@ class WatchlistStore {
   handleUpdate = async symbol => {
     try {
       const response = await axios.get(
-        `http://localhost:3001/symbol/${symbol}`
+        `http://${host}:3001/symbol/${symbol}`
       );
       const updatedData = response.data;
       const newData = Object.keys(this.symbols).map(key => {

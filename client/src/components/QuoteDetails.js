@@ -5,12 +5,13 @@ import { Collapse } from "antd";
 import { observer } from "mobx-react-lite";
 import quoteDetailsStore from "../store/QuoteDetailsStore";
 import "./QuoteDetails.css";
+var host = "127.0.0.1";
 
 const QuoteDetails = ({ selectedSymbol }) => {
   useEffect(() => {
     if (selectedSymbol) {
       axios
-        .get(`http://localhost:3001/symbol/${selectedSymbol}`)
+        .get(`http://${host}:3001/symbol/${selectedSymbol}`)
         .then(response => {
           quoteDetailsStore.setQuoteDetails(response.data);
         })
