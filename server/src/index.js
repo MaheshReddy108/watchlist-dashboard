@@ -20,7 +20,7 @@ const corsOptions = {
 app.use(function(req, res, next) {
   res.setHeader('Access-Control-Allow-Origin',  "*");
   res.setHeader('Access-Control-Allow-Methods', 'GET,HEAD,OPTIONS,POST,PUT,DELETE');
-res.setHeader('Access-Control-Allow-Headers', 'origin, content-type, accept, x-requested-with');
+res.setHeader('Access-Control-Allow-Headers', 'origin, content-type, accept, x-requested-with,application/json');
   res.setHeader('Cache-Control', 'no-cache');
   next();
 });
