@@ -4,6 +4,15 @@ A simple and customizable dashboard to manage your stock watchlist items.
 ## Description
 The Watchlist Dashboard is a web application that allows you to manage and track stock symbols in your watchlist. You can add, delete, and update (refresh) any symbol, and when you click on a specific row, the quote details will open up for that symbol.
 
+* **Home Page - Watchlist Component**
+
+![Home Page](https://github.com/MaheshReddy108/watchlist-dashboard/blob/main/Images/Home_page.png)
+
+* **Quote Details**
+
+
+![Quote details](https://github.com/MaheshReddy108/watchlist-dashboard/blob/main/Images/Quote_details.png)
+
 ## Table of Contents
 - [Installation](#installation)
 - [Features](#features)
@@ -12,6 +21,7 @@ The Watchlist Dashboard is a web application that allows you to manage and track
   - [MobX State Management](#mobx-state-management)
 - [Tests](#tests)
 - [Deployment](#deployment)
+- [Additional Images](#Images)
 
 ## Installation <a name="installation"></a>
 
@@ -62,3 +72,20 @@ The Watchlist Dashboard is deployed to an AWS EC2 instance and can be accessed v
 
 The server is currently paused due to billing issues, If you would like to view the watchlist dashboard application hosted on AWS, please let me know so that I can resume the server.
 
+## Images <a name = "Images"></a>
+
+* ADD Symbol
+
+![Add Symbol](https://github.com/MaheshReddy108/watchlist-dashboard/blob/main/Images/Add_symbol.png)
+
+* Update Symbol
+
+![Update Symbol](https://github.com/MaheshReddy108/watchlist-dashboard/blob/main/Images/update_symbol.png)
+
+* User Dropdown
+
+![User Dropdown](https://github.com/MaheshReddy108/watchlist-dashboard/blob/main/Images/user_dropdown.png)
+
+* Error handling 
+
+![Error handling](https://github.com/MaheshReddy108/watchlist-dashboard/blob/main/Images/error_handling_empty-symbol.png)
