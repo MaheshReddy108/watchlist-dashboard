@@ -28,7 +28,6 @@ const Watchlist = observer(() => {
     handleUpdate
   } = watchlistStore; // Destructure the store's properties and methods
 
-  console.log("mahesh", selectedUser);
   
   useEffect(() => {
     fetchData();
