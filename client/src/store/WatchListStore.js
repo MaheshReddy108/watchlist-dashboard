@@ -80,6 +80,12 @@ class WatchlistStore {
       setTimeout(() => {
         return this.fetchData();
       }, 1000);
+      this.showSweetAlert(
+        `Symbol "${symbol}" is being deleted successfully.`,
+        "success",
+        "Success!"
+      );
+      this.inputValue = "";
     })
     .catch(error => {
       this.showSweetAlert(error.response.data.error);
