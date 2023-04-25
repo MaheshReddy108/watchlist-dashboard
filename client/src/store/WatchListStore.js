@@ -77,7 +77,9 @@ class WatchlistStore {
       data: { symbol }
     })
     .then(() => {
-      return this.fetchData();
+      setTimeout(() => {
+        return this.fetchData();
+      }, 1000);
     })
     .catch(error => {
       this.showSweetAlert(error.response.data.error);
