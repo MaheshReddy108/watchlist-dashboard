@@ -99,9 +99,9 @@ class WatchlistStore {
     .then(() => {
       setTimeout(() => {
         this.fetchData();
-      }, 3000);
+      }, 1000);
       this.showSweetAlert(
-        `Symbol "${this.inputValue.toUpperCase()}" has been added successfully.`,
+        `Symbol "${this.inputValue.toUpperCase()}" is being added successfully.`,
         "success",
         "Success!"
       );
@@ -142,7 +142,7 @@ class WatchlistStore {
         }
       });
       this.showSweetAlert(
-        `Symbol "${symbol}" has been updated successfully.`,
+        `Symbol "${symbol}" is being updated successfully.`,
         "success",
         "Success!"
       );
@@ -160,7 +160,7 @@ class WatchlistStore {
       title: title,
       text: message,
       showConfirmButton: false,
-      timer: 3000,
+      timer: 2000,
       timerProgressBar: true
     });
   };
