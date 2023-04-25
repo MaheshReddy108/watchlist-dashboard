@@ -30,81 +30,73 @@ class WatchlistStore {
     });
   }
 
-  fetchData = async () => {
-    try {
-      const response = await fetch(
-        `http://${host}:3001/watchlist/${this.selectedUser}`,
-        {
-          headers: {
-            "Content-Type": "application/json"
-          }
-        }
-      );
-      const data = await response.json();
-      this.symbols = data;
-    } catch (error) {
+  fetchData = () => {
+    return axios.get(`http://${host}:3001/watchlist/${this.selectedUser}`, {
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+    .then(response => {
+      this.symbols = response.data;
+    })
+    .catch(error => {
       this.showSweetAlert(error.response.data.error);
-    }
+    });
   };
-
-  setSelectedUser = async user => {
+  
+  setSelectedUser = user => {
     this.selectedUser = user;
+    return Promise.resolve();
   };
-
-  setInputValue = async value => {
+  
+  setInputValue = value => {
     this.inputValue = value;
+    return Promise.resolve();
   };
-
-  fetchSymbolsInfo = async () => {
-    try {
-      const response = await fetch(`http://${host}:3001/allsymbols`, {
-        headers: {
-          "Content-Type": "application/json"
-        }
-      });
-      const symbols = await response.json();
-      this.symbolsInfo = symbols;
-    } catch (error) {
+  
+  fetchSymbolsInfo = () => {
+    return axios.get(`http://${host}:3001/allsymbols`, {
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+    .then(response => {
+      this.symbolsInfo = response.data;
+    })
+    .catch(error => {
       console.log(error);
       this.showSweetAlert(error.response.data.error);
-    }
+    });
   };
-
-  handleDelete = async symbol => {
-    try {
-      const response = await fetch(
-        `http://${host}:3001/watchlist/${this.selectedUser}/remove`,
-        {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({ symbol })
-        }
-      );
-      await this.fetchData();
-    } catch (error) {
+  
+  handleDelete = symbol => {
+    return axios.delete(`http://${host}:3001/watchlist/${this.selectedUser}/remove`, {
+      headers: {
+        "Content-Type": "application/json"
+      },
+      data: { symbol }
+    })
+    .then(() => {
+      return this.fetchData();
+    })
+    .catch(error => {
       this.showSweetAlert(error.response.data.error);
-    }
+    });
   };
-
-  handleAdd = async () => {
+  
+  handleAdd = () => {
     if (this.inputValue.trim() === "") {
       this.showSweetAlert("Enter a Valid Symbol");
-      return;
+      return Promise.resolve();
     }
-    try {
-      const response = await fetch(
-        `http://${host}:3001/watchlist/${this.selectedUser}/add`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({ symbol: this.inputValue.toUpperCase() })
-        }
-      );
-      // await this.fetchData();
+    return axios.post(`http://${host}:3001/watchlist/${this.selectedUser}/add`, {
+      symbol: this.inputValue.toUpperCase()
+    }, {
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+    .then(() => {
       setTimeout(() => {
         this.fetchData();
       }, 10000);
@@ -114,21 +106,22 @@ class WatchlistStore {
         "Success!"
       );
       this.inputValue = "";
-    } catch (error) {
+    })
+    .catch(error => {
       this.showSweetAlert(error.response.data.error);
       this.inputValue = "";
-    }
+    });
   };
-
+  
   handleRowClick = symbol => {
     this.isRowClicked = true;
     this.selectedSymbol = symbol;
   };
-
-  handleUpdate = async symbol => {
-    try {
-      const response = await fetch(`http://${host}:3001/symbol/${symbol}`);
-      const updatedData = await response.json();
+  
+  handleUpdate = symbol => {
+    return axios.get(`http://${host}:3001/symbol/${symbol}`)
+    .then(response => {
+      const updatedData = response.data;
       const newData = Object.keys(this.symbols).map(key => {
         if (key === symbol) {
           const updatedRow = {
@@ -154,10 +147,12 @@ class WatchlistStore {
         "Success!"
       );
       this.symbols = newData;
-    } catch (error) {
+    })
+    .catch(error => {
       this.showSweetAlert(error.response.data.error);
-    }
+    });
   };
+  
 
   showSweetAlert = (message, icon = "error", title = "Oops...") => {
     Swal.fire({
